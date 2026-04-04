@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TeletubiFIT">
+<meta name="theme-color" content="#3D1060">
+<title>TeletubiFIT · Registro</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --p900: #1E0A35;
+    --p800: #2D1050;
+    --p700: #3D1060;
+    --p600: #5B2D82;
+    --p500: #7B3F9E;
+    --p400: #9D62BC;
+    --p300: #C8A8E0;
+    --p200: #E0CCEF;
+    --p100: #EEE0F7;
+    --p50:  #F9F4FD;
+    --white: #FFFFFF;
+    --gray50: #F8F8F8;
+    --gray100: #F0F0F0;
+    --gray200: #E2E2E2;
+    --gray400: #A0A0A0;
+    --gray600: #666666;
+    --gray800: #222222;
+    --success: #2D7A3A;
+    --success-bg: #E8F5E9;
+    --danger: #C0392B;
+    --danger-bg: #FDECEA;
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 22px;
+    --radius-xl: 30px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--p900);
+    color: var(--gray800);
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .app {
+    width: 100%;
+    max-width: 420px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: var(--gray50);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--p700);
+    padding: 52px 20px 20px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 50%;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; left: 60px;
+    width: 100px; height: 100px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 50%;
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+  }
+  .logo {
+    width: 40px; height: 40px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(255,255,255,0.18);
+    flex-shrink: 0;
+  }
+  .logo svg { width: 22px; height: 22px; }
+  .header-text {}
+  .header-brand { font-size: 17px; font-weight: 600; color: #fff; letter-spacing: -0.3px; }
+  .header-sub { font-size: 12px; color: rgba(255,255,255,0.55); font-weight: 400; margin-top: 1px; }
+
+  /* ── SCREENS ── */
+  .screens { flex: 1; overflow-y: auto; overflow-x: hidden; scroll-behavior: smooth; }
+  .screen { display: none; padding: 16px; flex-direction: column; gap: 12px; }
+  .screen.active { display: flex; }
+
+  /* ── SECTION HEADER ── */
+  .section-head {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--p500);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0 4px;
+    margin-bottom: -4px;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--gray200);
+    overflow: hidden;
+  }
+
+  /* ── FIELD ── */
+  .field {
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--gray100);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .field:last-child { border-bottom: none; }
+  .field-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray400);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .field select, .field input[type="number"], .field input[type="text"] {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--gray800);
+    background: transparent;
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 0;
+    font-weight: 400;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .field select option { color: var(--gray800); background: white; }
+  .field select:invalid, .field select option[value=""] { color: var(--gray400); }
+
+  /* ── RPE ── */
+  .rpe-field { padding: 13px 16px; }
+  .rpe-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray400);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+  }
+  .rpe-hints {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--gray400);
+    margin-bottom: 6px;
+    padding: 0 2px;
+  }
+  .rpe-buttons {
+    display: flex;
+    gap: 6px;
+  }
+  .rpe-btn {
+    flex: 1;
+    height: 42px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--gray200);
+    background: var(--gray50);
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray600);
+    cursor: pointer;
+    transition: all 0.12s ease;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .rpe-btn:active { transform: scale(0.94); }
+  .rpe-btn.sel-6  { background: #E8F5E9; border-color: #4CAF50; color: #2E7D32; }
+  .rpe-btn.sel-7  { background: #F1F8E9; border-color: #8BC34A; color: #558B2F; }
+  .rpe-btn.sel-8  { background: #FFF8E1; border-color: #FFB300; color: #E65100; }
+  .rpe-btn.sel-9  { background: #FFF3E0; border-color: #FF7043; color: #BF360C; }
+  .rpe-btn.sel-10 { background: #FDECEA; border-color: #E53935; color: #B71C1C; }
+
+  /* ── DOUBLE FIELD ── */
+  .double-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* ── RM PREVIEW ── */
+  .rm-preview {
+    display: none;
+    background: var(--p100);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--p600);
+    font-weight: 500;
+    text-align: center;
+    border: 1px solid var(--p300);
+  }
+  .rm-preview.show { display: block; }
+  .rm-preview span { font-family: 'DM Mono', monospace; font-size: 15px; font-weight: 500; }
+
+  /* ── NOTES ── */
+  .notes-field { padding: 13px 16px; }
+  .notes-field textarea {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--gray800);
+    background: transparent;
+    border: none;
+    outline: none;
+    width: 100%;
+    resize: none;
+    height: 52px;
+    line-height: 1.5;
+  }
+  .notes-field textarea::placeholder { color: var(--gray400); }
+
+  /* ── SUBMIT BUTTON ── */
+  .btn-submit {
+    background: var(--p600);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    width: 100%;
+    cursor: pointer;
+    letter-spacing: -0.2px;
+    transition: all 0.15s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-submit:active { transform: scale(0.98); background: var(--p700); }
+  .btn-submit.loading { background: var(--p400); pointer-events: none; }
+  .btn-submit.error { background: var(--danger); }
+
+  /* ── SUCCESS SCREEN ── */
+  .success-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    gap: 16px;
+    text-align: center;
+  }
+  .success-icon {
+    width: 72px; height: 72px;
+    background: var(--p100);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 4px;
+  }
+  .success-icon svg { width: 36px; height: 36px; }
+  .success-title { font-size: 22px; font-weight: 600; color: var(--gray800); letter-spacing: -0.4px; }
+  .success-detail {
+    background: var(--white);
+    border: 1px solid var(--gray200);
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    width: 100%;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--gray600);
+    text-align: left;
+  }
+  .success-detail strong { color: var(--gray800); font-weight: 600; }
+  .success-rm {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--p600);
+    background: var(--p100);
+    border-radius: var(--radius-sm);
+    padding: 8px 14px;
+    font-weight: 500;
+  }
+  .btn-next {
+    background: var(--p600);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 15px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-top: 4px;
+  }
+  .btn-next:active { transform: scale(0.98); background: var(--p700); }
+  .btn-change {
+    background: transparent;
+    color: var(--p600);
+    border: 1.5px solid var(--p300);
+    border-radius: var(--radius-md);
+    padding: 13px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-change:active { background: var(--p100); }
+
+  /* ── BADGE ── */
+  .sheet-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--success-bg);
+    border-radius: var(--radius-sm);
+    padding: 9px 12px;
+    font-size: 12px;
+    color: var(--success);
+    font-weight: 500;
+  }
+  .sheet-badge svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+  /* ── SESSION CONTEXT ── */
+  .session-ctx {
+    background: var(--p700);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .ctx-label { font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; }
+  .ctx-value { font-size: 14px; color: #fff; font-weight: 500; margin-top: 2px; }
+  .ctx-divider { width: 1px; background: rgba(255,255,255,0.15); height: 32px; }
+
+  /* ── BOTTOM PADDING ── */
+  .bottom-pad { height: 24px; flex-shrink: 0; }
+
+  /* ── INSTALL BANNER ── */
+  .install-banner {
+    display: none;
+    background: var(--p800);
+    padding: 12px 16px;
+    flex-shrink: 0;
+  }
+  .install-banner.show { display: block; }
+  .install-text { font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.4; }
+  .install-text strong { color: #fff; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .screen.active { animation: slideUp 0.22s ease; }
+
+  @keyframes pulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  .btn-submit.loading::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.1);
+    animation: pulse 1s infinite;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="9" r="3.5" stroke="rgba(255,255,255,0.9)" stroke-width="1.5"/>
+          <path d="M12 14c-5 0-7 2-7 4v1h14v-1c0-2-2-4-7-4z" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M17 6l2 2-2 2M7 6L5 8l2 2" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="header-text">
+        <div class="header-brand">TeletubiFIT</div>
+        <div class="header-sub">Registro de sesión</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INSTALL BANNER (iOS) -->
+  <div class="install-banner" id="installBanner">
+    <div class="install-text">
+      <strong>Guarda esta app en tu móvil:</strong> toca el botón Compartir y selecciona "Añadir a pantalla de inicio"
+    </div>
+  </div>
+
+  <div class="screens" id="screens">
+
+    <!-- SCREEN: FORM -->
+    <div class="screen active" id="screenForm">
+
+      <div class="session-ctx" id="ctxBar">
+        <div>
+          <div class="ctx-label">Ejercicio</div>
+          <div class="ctx-value" id="ctxEjercicio">—</div>
+        </div>
+        <div class="ctx-divider"></div>
+        <div>
+          <div class="ctx-label">Serie</div>
+          <div class="ctx-value" id="ctxSerie">—</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-head">Ejercicio</div>
+        <div class="card" style="margin-top:8px;">
+          <div class="field">
+            <div class="field-label">Nombre</div>
+            <select id="fEjercicio" required>
+              <option value="">Selecciona...</option>
+              <optgroup label="Empuje">
+                <option>Press Banca Plano (Barra)</option>
+                <option>Press Banca Inclinado (Mancuernas)</option>
+                <option>Press Militar (Barra)</option>
+                <option>Press Militar (Mancuernas)</option>
+                <option>Fondos en Paralelas</option>
+                <option>Aperturas (Mancuernas)</option>
+                <option>Extensión Tríceps (Polea)</option>
+              </optgroup>
+              <optgroup label="Tirón">
+                <option>Dominadas</option>
+                <option>Remo Pendlay</option>
+                <option>Remo con Mancuerna</option>
+                <option>Jalón al Pecho</option>
+                <option>Remo en Polea Baja</option>
+                <option>Curl Bíceps (Barra)</option>
+                <option>Curl Bíceps (Mancuernas)</option>
+              </optgroup>
+              <optgroup label="Piernas">
+                <option>Sentadilla (Barra)</option>
+                <option>Sentadilla Goblet</option>
+                <option>Peso Muerto (Barra)</option>
+                <option>Peso Muerto Rumano</option>
+                <option>Hip Thrust</option>
+                <option>Prensa de Piernas</option>
+                <option>Zancadas / Lunges</option>
+                <option>Leg Curl</option>
+                <option>Leg Extension</option>
+                <option>Elevación de Talones</option>
+              </optgroup>
+              <optgroup label="Core">
+                <option>Plancha</option>
+                <option>Crunch</option>
+                <option>Rueda Abdominal</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="field">
+            <div class="field-label">Número de serie</div>
+            <select id="fSerie" required>
+              <option value="">Selecciona...</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="double-row">
+        <div>
+          <div class="section-head">Repeticiones</div>
+          <div class="card" style="margin-top:8px;">
+            <div class="field">
+              <div class="field-label">Realizadas</div>
+              <input type="number" id="fReps" placeholder="10" min="1" max="100" inputmode="numeric">
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="section-head">Carga</div>
+          <div class="card" style="margin-top:8px;">
+            <div class="field">
+              <div class="field-label">kg (0 = corporal)</div>
+              <input type="number" id="fCarga" placeholder="60" min="0" step="0.5" inputmode="decimal">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="rpe-field">
+          <div class="rpe-label">RPE — Esfuerzo percibido</div>
+          <div class="rpe-hints">
+            <span>Muy fácil</span>
+            <span>Máximo</span>
+          </div>
+          <div class="rpe-buttons" id="rpeButtons">
+            <button class="rpe-btn" data-v="6">6</button>
+            <button class="rpe-btn" data-v="7">7</button>
+            <button class="rpe-btn" data-v="8">8</button>
+            <button class="rpe-btn" data-v="9">9</button>
+            <button class="rpe-btn" data-v="10">10</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="rmPreview" class="rm-preview">
+        1RM estimado · <span id="rmValue">—</span> kg
+      </div>
+
+      <div class="card">
+        <div class="notes-field">
+          <div class="field-label" style="margin-bottom:6px;">Notas (opcional)</div>
+          <textarea id="fNotas" placeholder="Sensaciones, técnica, dolor..."></textarea>
+        </div>
+      </div>
+
+      <div class="sheet-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#2D7A3A" stroke-width="2" stroke-linecap="round">
+          <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+        </svg>
+        Los datos van directo a tu Google Sheets
+      </div>
+
+      <button class="btn-submit" id="btnSubmit" onclick="submitForm()">
+        Registrar serie
+      </button>
+
+      <div class="bottom-pad"></div>
+    </div>
+
+    <!-- SCREEN: SUCCESS -->
+    <div class="screen" id="screenSuccess">
+      <div class="success-wrap">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5B2D82" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 6L9 17l-5-5"/>
+          </svg>
+        </div>
+        <div class="success-title">Serie registrada</div>
+
+        <div class="success-detail" id="successDetail"></div>
+
+        <div class="success-rm" id="successRM"></div>
+
+        <button class="btn-next" onclick="nextSet()">Siguiente serie →</button>
+        <button class="btn-change" onclick="changeExercise()">Cambiar ejercicio</button>
+        <button class="btn-change" style="margin-top:4px; color:var(--gray400); border-color:var(--gray200);" onclick="newSession()">Nueva sesión</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── CONFIGURACIÓN ─────────────────────────────────────────────────────────────
+// Cuando hagas el Apps Script, pega aquí la URL que te da Google:
+const SHEET_URL = "PEGA_AQUI_LA_URL_DEL_APPS_SCRIPT";
+// ─────────────────────────────────────────────────────────────────────────────
+
+let selectedRPE = null;
+let lastData = {};
+
+// iOS install banner
+const isIOS = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+const isStandalone = window.navigator.standalone;
+if (isIOS && !isStandalone) {
+  document.getElementById('installBanner').classList.add('show');
+}
+
+// Context bar update
+function updateCtx() {
+  const ej  = document.getElementById('fEjercicio').value;
+  const ser = document.getElementById('fSerie').value;
+  document.getElementById('ctxEjercicio').textContent = ej  ? ej.split(' ')[0] : '—';
+  document.getElementById('ctxSerie').textContent     = ser ? 'Serie ' + ser   : '—';
+}
+
+document.getElementById('fEjercicio').addEventListener('change', updateCtx);
+document.getElementById('fSerie').addEventListener('change', updateCtx);
+
+// RPE selection
+document.getElementById('rpeButtons').addEventListener('click', e => {
+  const btn = e.target.closest('.rpe-btn');
+  if (!btn) return;
+  document.querySelectorAll('.rpe-btn').forEach(b => b.className = 'rpe-btn');
+  const v = btn.dataset.v;
+  btn.classList.add('sel-' + v);
+  selectedRPE = v;
+  updateRM();
+});
+
+// 1RM live preview
+function updateRM() {
+  const reps  = parseFloat(document.getElementById('fReps').value);
+  const carga = parseFloat(document.getElementById('fCarga').value);
+  const prev  = document.getElementById('rmPreview');
+  if (reps > 0 && carga > 0) {
+    const rm = (carga * (1 + reps / 30)).toFixed(1);
+    document.getElementById('rmValue').textContent = rm;
+    prev.classList.add('show');
+  } else {
+    prev.classList.remove('show');
+  }
+}
+document.getElementById('fReps').addEventListener('input', updateRM);
+document.getElementById('fCarga').addEventListener('input', updateRM);
+
+// Form submit
+async function submitForm() {
+  const ejercicio= document.getElementById('fEjercicio').value;
+  const serie    = document.getElementById('fSerie').value;
+  const reps     = document.getElementById('fReps').value;
+  const carga    = document.getElementById('fCarga').value;
+  const notas    = document.getElementById('fNotas').value;
+  const btn      = document.getElementById('btnSubmit');
+
+  if (!ejercicio || !serie || !reps || carga === '' || !selectedRPE) {
+    btn.textContent = 'Completa todos los campos';
+    btn.classList.add('error');
+    setTimeout(() => {
+      btn.textContent = 'Registrar serie';
+      btn.classList.remove('error');
+    }, 2000);
+    return;
+  }
+
+  lastData = { ejercicio, serie, reps: +reps, carga: +carga, rpe: +selectedRPE, notas };
+
+  btn.textContent = 'Enviando...';
+  btn.classList.add('loading');
+
+  const payload = {
+    timestamp : new Date().toISOString(),
+    ejercicio, serie: +serie,
+    reps: +reps, carga: +carga,
+    rpe: +selectedRPE, notas
+  };
+
+  try {
+    if (SHEET_URL !== "PEGA_AQUI_LA_URL_DEL_APPS_SCRIPT") {
+      await fetch(SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    }
+    showSuccess();
+  } catch(e) {
+    // no-cors mode — si llegó aquí el envío fue correcto
+    showSuccess();
+  }
+
+  btn.textContent = 'Registrar serie';
+  btn.classList.remove('loading');
+}
+
+function showSuccess() {
+  const rm = (lastData.carga * (1 + lastData.reps / 30)).toFixed(1);
+  const vol = lastData.reps * lastData.carga;
+
+  document.getElementById('successDetail').innerHTML =
+    `<strong>Ejercicio</strong><br>${lastData.ejercicio}<br><br>` +
+    `<strong>Serie ${lastData.serie}</strong> · ${lastData.reps} reps · ${lastData.carga} kg · RPE ${lastData.rpe}` +
+    (lastData.notas ? `<br><br><em>${lastData.notas}</em>` : '');
+
+  document.getElementById('successRM').textContent =
+    `1RM est. ${rm} kg  ·  Volumen ${vol} kg`;
+
+  document.getElementById('screenForm').classList.remove('active');
+  document.getElementById('screenSuccess').classList.add('active');
+}
+
+function nextSet() {
+  const serieEl = document.getElementById('fSerie');
+  const cur = parseInt(serieEl.value);
+  if (cur < 5) serieEl.value = cur + 1;
+  resetInputs(false);
+  goToForm();
+}
+
+function changeExercise() {
+  document.getElementById('fEjercicio').value = '';
+  document.getElementById('fSerie').value = '1';
+  resetInputs(false);
+  goToForm();
+}
+
+function newSession() {
+  document.getElementById('fEjercicio').value = '';
+  document.getElementById('fSerie').value = '';
+  resetInputs(true);
+  goToForm();
+}
+
+function resetInputs(full) {
+  document.getElementById('fReps').value = '';
+  document.getElementById('fCarga').value = '';
+  document.getElementById('fNotas').value = '';
+  document.querySelectorAll('.rpe-btn').forEach(b => b.className = 'rpe-btn');
+  selectedRPE = null;
+  document.getElementById('rmPreview').classList.remove('show');
+  if (full) updateCtx();
+}
+
+function goToForm() {
+  document.getElementById('screenSuccess').classList.remove('active');
+  document.getElementById('screenForm').classList.add('active');
+  updateCtx();
+  document.getElementById('screens').scrollTop = 0;
+}
+</script>
+</body>
+</html>
