@@ -672,7 +672,7 @@ async function submitForm() {
   };
 
   try {
-    if (SHEET_URL !== "PEGA_AQUI_LA_URL_DEL_APPS_SCRIPT") {
+    if (SHEET_URL !== "const SHEET_URL = "https://script.google.com/macros/s/AKfycbzgW-HAtsl--gNHUua-HLREDg77vhbIUqyLfLiKeR1Zlqdv3niPYDmvAjuzFRD7VJ_X/exec";") {
       await fetch(SHEET_URL, {
         method: 'POST',
         mode: 'no-cors',
